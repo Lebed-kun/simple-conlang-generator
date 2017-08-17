@@ -81,7 +81,8 @@ def parsePhNotation(inline):
         if len(posCond[1]) == 2:
             rule[1] += " "
         
-
+        rule[0] = rule[0].split(",")
+        rule[1] = rule[1].split(",")
 
     final = []
     if len(source) > len(result):
@@ -102,19 +103,26 @@ def parsePhNotation(inline):
 def matchCondition(bSeq, eSeq, word, pos, seq):
     wordR = " "+word+" "
     posR = pos + 1
-    if len(bSeq) == 0:
-        bCond = True
-    elif posR<len(bSeq):
-        bCond = False
-    else:
-        bCond = matchSequences(bSeq+seq, wordR[posR-len(bSeq):posR-len(bSeq)+len(bSeq+seq)])
-
-    if (len(eSeq) == 0):
-        eCond = True
-    elif posR+len(seq+eSeq)>len(wordR):
-        eCond = False
-    else:
-        eCond = matchSequences(seq+eSeq, wordR[posR:posR+len(seq+eSeq)])
+    for i in range(0, len(bSeq)):
+        if len(bSeq[i]) == 0:
+            bCond = True
+            break
+        elif posR<len(bSeq[i]):
+            bCond = False
+        else:
+            bCond = matchSequences(bSeq[i]+seq, wordR[posR-len(bSeq[i]):posR-len(bSeq[i])+len(bSeq[i]+seq)])
+            if bCond:
+                break
+    for i in range(0, len(eSeq)):
+        if (len(eSeq[i]) == 0):
+            eCond = True
+            break
+        elif posR+len(seq+eSeq[i])>len(wordR):
+            eCond = False
+        else:
+            eCond = matchSequences(seq+eSeq[i], wordR[posR:posR+len(seq+eSeq[i])])
+            if eCond:
+                break
     return bCond and eCond
 
 #are two phonemic sequences matching?
@@ -214,7 +222,7 @@ def command_exec(cmd):
     elif params[0] == "set":
         #pars = 0
         if params[1] == "ph" and len(params) == 4:
-            phonemes[params[2]] = params[3]
+            phonemes[params[2]] = params[3].split(',')
         elif params[1] == "ex" and len(params) > 2:
             i = 2
             while i < len(params):
@@ -244,12 +252,24 @@ def command_exec(cmd):
 
     elif params[0] == "savewords":
         if len(params) == 2:
-            sw = open(params[1]+".txt", 'w')
+            sw = open(params[1]+".txt", 'wt', encoding="utf-8")
             for i,w in enumerate(words):
                 if i==0 or i%10:
                     sw.write(w+' ')
                 else:
                     sw.write(w+'\n')
+    elif params[0] == "loadwords":
+        if len(params) == 2:
+            f = open(params[1]+".txt", 'rt', encoding="utf-8")
+            inp = f.read()
+            words = inp.split()
+    elif params[0] == "prwords":
+        for i,w in enumerate(words):
+            if i==0 or i%10:
+                print(w, end=" ")
+            else:
+                print(w)
+        print()
 
     elif params[0] == "phshift":
         if len(params) == 1:
@@ -314,6 +334,8 @@ def command_exec(cmd):
         print("gen <phonemicPattern> [amountOfWords] - generate words;")
         print("phshift [word] [soundChange] - change word list with phonological rules or a certain word with certain rule")
         print("savewords <filename> - save wordlist to file;")
+        print("loadwords <filename> - load wordlist from a file")
+        print("prwords - show wordlist")
         print("exit - close program")
     
 
