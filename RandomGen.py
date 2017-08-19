@@ -37,24 +37,3 @@ class YuleDistr(object):
             return -1
         else:
             return (1/num)*(math.log(num+1)-math.log(rank))
-
-
-#test 1 +++
-s = [0.1, 0.01]
-#print(normalizeFreqs(s))
-
-
-#test 2
-"""for i in range(0, 100):
-    k = randomGen(s)
-    if i%10 < 9:
-        print(str(k), end=" ")
-    else:
-        print(str(k))"""
-
-#test 3
-
-for i in range(1, 21):
-    print(borodProb(20,i))
-    
-
