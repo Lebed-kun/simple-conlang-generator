@@ -1,0 +1,131 @@
+Example 1: 
+
+Let's set a phonemic inventory:
+
+>> set ph C m,n,p,t,k,s,h,w,l,r,j
+>> set ph V i,u,e,o,a
+
+Then let's generate words/stems with (C)V(C) syllable structure:
+
+>> gen (C)V(V)(C) 200
+
+This gives a result like this:
+
+iaw rio uo ia ue ou ho iip oet nu ej
+he im u so na su pok ois kue teih
+uuj si hum io luul jor juoh pa tel a
+no noa moo iiw ior i piat pue pep sak
+e ii oim os ul rit oij oaw ka peu
+au aot tuih om kii wuel oeh el tie jaw
+ei nah oul aop aam li mae jim hui aok
+eu ah on nem mal ep wu ouh o jiil
+tap jaop rii jo mo ju tiop an hoop ek
+iu pae wa luak hoew nor ih son ta wea
+wes naw oas iw uom weow rom ril oo oj
+teh ui hee iur iun pis tuot is um woe
+mieh uah ham muu lao te jer wo ar re
+wej rot sow nio oa wuo oh ae iah paa
+top weaw pon miot ruip pi il ij 
+
+Example 2:
+
+Let's try something more complex:
+
+>> set ph C m,n,p,t,k,ts,tʃ,s,ʃ
+>> set ph V i,u,ə,a
+>> set ph R w,r,l,j
+>> set ph N n 
+
+Type a command:
+>> gen (C)(R)V(V)(R)(N) 300
+
+And the program generates words with more complex syllable structure:
+
+ʃlan əln tsrual nun klu naijn mwarn rəur lun tsiwn njul
+miwn suuw ən uij wiiln pləjn tʃləə wuun waurn iln
+tʃwiir mialn əə naaj pjua lian an uuj nuu tsiijn
+liən iarn məl uəj irn sun tuwn lə ruəw əjn
+iuj rəun ləəw njuə rin kəaln nruun tswia tua ju
+wailn tsaun al jauln ur pin uln njuuw plu səaj
+la tʃuil u tʃwujn tsui praj urn liirn ul mjaujn
+tswaur aurn tʃwan un mwəiln mrəun ʃwaəl laijn ləln truə
+piun tən əiw səu pjiu ləu triln əin aəwn miuw
+tʃlar ʃrəur nian nəijn il kaajn nlar pəarn wu a
+miiwn jaarn kaiwn uir ij sərn tʃruan əən in najn
+nəwn arn waən ʃiurn tʃrəa rəawn sləin jəə ua məajn
+uw uan ə juun wə tsjurn maa təirn klaə əarn
+sləan i kruuj mli rajn run wa ai prəun təin
+aijn nan əu ʃun tə sjiəwn uun əiln kəi tʃaw
+tʃuəj rəi tluin nui suln ʃain əi wiln tsləj tsruun
+liw laə kjər wij wuəj klaln tʃuə iən liun kiu
+ran raar jin sraa ʃwiir tʃaan ʃwua tun tul tʃan
+tləuw srijn swuwn trəurn tʃu səin tʃwiil tlaə ruj tru
+liarn ʃəuw mwəl tʃwuul riin laən tʃa ʃəjn tʃraw mwin
+riən laun pə twəəjn paər luuln tʃlal ʃwaər tjar ajn
+kuu tsrun tlun pwuun tʃən krəan juawn liijn iur əəw
+tuln iw tslal kja jiuwn ʃiu wiən aan rujn awn
+iər luin tsjal əw mrə pli mruin wirn wiəln ar
+lin suin nwəi ruln tsə ʃwuir tsən ʃli uuw mun
+uujn ər tuu tʃwurn tsaur nujn pwəəw tʃaaw rawn tʃəa
+kliuwn wurn kəər ijn mriəwn 
+
+Example 3:
+
+Let's add one syllable and change the R group of sound:
+>> set ph R r,l
+>> gen (CV)(C)(R)V(V)(R)(N) 300
+
+Result:
+
+nəain tʃəlir ran iul ʃin ən ʃlu əir kakailn rə tʃrər
+minlən puə tʃli mətiun kirain laə siləl ual pa luul
+lian ə nraln tʃlaa raərn ləəln kikra tʃlin lun ian
+ʃliln uul kain nəʃaaln tirur təklir nən a nunrul ləln
+au kia salia urn tʃriln nunrə ər arn liu larn
+tuʃrəən laal mutʃliln mələn pəu nilai kimlaul pən muə əur
+ʃutəərn kətsan nimə plər rəar kaplua tsrairn riur mələ tətal
+kiirn puslən məklui tʃulaan piəər məmiər nəsin trən turaar mraə
+tʃu kəuiln tsruu pəmin un rəin kəa nraur ʃuan sitiu
+taməiln pəiarn putʃrin lərn kaiil tʃəun ruln tʃai ʃurəəln tʃa
+ʃar kliərn pukaarn kirn nəl tʃaən tʃaruirn mə mikrə ləin
+sər pitʃəln kaəl suərn ua sirn ra nənun tsruul slain
+ruərn tsatsluərn tʃiln nru laun mimlər ʃuəln nutal lil muun
+ʃii ʃapliarn suləaln tsunruarn srəuln məruin tʃunrəi al irn surn
+iun rain lul nikrərn aln mlu uln sulan puku səlair
+in siləir pərairn ʃəpal pinauln prəuln piləun məlir təarn tsimlən
+sisan miklər tunurn tʃra naə nəiil puəur kaər pətsruə tʃaʃain
+tsuirn kutləal tʃəklan sri tinlal iirn pəmiar ləərn tətsəl aən
+nutʃruən ʃutsəir kilauln niaun tʃaar tʃəsri kərən tunaun luiln sli
+tʃrar sutlu kurəin muəl ʃiləul səpan nərər saraln nunir nanin
+rəln mərəəln paməl təpaal iln ʃurəar suprir kəʃən nuʃir muiuln
+kəarn kitiln numii ʃuil ʃuirn mikrəuln siun tʃilir tsən rur
+tsəluərn tsaklirn kinaurn tʃaʃaul ʃəliir ri tsliəl puil ʃaril kasair
+kra nun ruən prəəln tiər tirərn tinaun tʃuəurn milan tʃuur
+iu nləin ʃiəirn niuln krarn napluər mutsu mara nərəən ʃaəəln
+ur mrin ʃləirn ruurn maaəln ləə mislil tələln tʃəniurn ləiln
+siʃəarn naləurn ru mlə pəau tsruin mi tʃamraul tsii prun
+suin kəmu tra kəlaər məuuln əl tuaul ʃən sraar tʃanlaə
+nəərn 
+
+Example 4:
+
+You can also use wildcards (capital latin letters) for morphemes. For example, infinitive of verb is marked with /ti/ suffix. Let's generate some verbs:
+
+>> set ph X ti
+
+Then:
+
+tslaanti muunti tsləinti ʃlənti unti əəti uənti uəlnti ləinti iunti kriilnti
+uəti lirnti slənti suti railti trəurti riurnti ualti ʃləlnti səirti
+kruunti ʃuənti tərti liti miirnti tʃləəti aalnti tsrinti mailti lalti
+əurti iulti mrəalti laarti ərnti sunti prəərnti əulti ʃriati luti
+uti arti ruilnti ʃunti tulnti lilnti tʃəiti kəlnti lənti tʃuinti
+tsrəunti anti laalnti tsiti rainti kəulti ləarnti əirti uərnti rilti
+tsunti tʃairnti raulti təirti kəurti raalnti tlalti pəiti tlirnti kənti
+liarnti iirnti pruti ʃiti pəurnti ləlti tulti mənti ʃlunti ilnti
+tsəulti tʃluti iati aəlnti uati ənti urnti ʃlaunti krurnti tsəulnti
+klaərti tlualti əalnti mriiti təti uurti aanti rinti ʃəilnti ʃrəti
+pəəti ləənti runti nanti alnti lilti tʃuti karti raəti klunti
+suənti iti kuinti tʃəlti auti mlarnti əti lalnti mauti aunti
+arnti rəarnti laəlnti paərti piurti ərti ləalnti kaunti nraənti maulnti
+sriti uunti iinti lurnti ʃrunti 
