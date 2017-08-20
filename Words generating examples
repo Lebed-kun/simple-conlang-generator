@@ -5,7 +5,7 @@ Let's set a phonemic inventory:
 >> set ph C m,n,p,t,k,s,h,w,l,r,j
 >> set ph V i,u,e,o,a
 
-Then let's generate words/stems with (C)V(C) syllable structure:
+Then let's generate words/stems with (C)V(V)(C) syllable structure (brackets marks optional phonemic/morphemic element):
 
 >> gen (C)V(V)(C) 200
 
