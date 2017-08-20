@@ -112,6 +112,7 @@ Example 4:
 You can also use wildcards (capital latin letters) for morphemes. For example, infinitive of verb is marked with /ti/ suffix. Let's generate some verbs:
 
 >> set ph X ti
+>> gen (C)(R)V(V)(R)(N)X 150
 
 Then:
 
