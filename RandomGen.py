@@ -18,15 +18,13 @@ class YuleDistr(object):
 
     @staticmethod
     def randomGen(freqs):
-        temp = normalizeFreqs(freqs)
+        temp = YuleDistr.normalizeFreqs(freqs)
         if temp[len(temp)-1] >= 1:
             return -1
         else:
-            num = random.random()
-            for i in range(0, len(temp)+1):
+            num = random.uniform(0, temp[len(temp)-1])
+            for i in range(0, len(temp)):
                 if i == 0 and num < temp[i]:
-                    return i
-                elif i == len(temp) and num >= temp[i-1]:
                     return i
                 elif num >= temp[i-1] and num < temp[i]:
                     return i
