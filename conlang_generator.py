@@ -3,17 +3,22 @@ import os
 import sys
 import json
 import random
+import math
+from RandomGen import YuleDistr
 
 words = [] #word list
 phonemes = {} #phonemes dictionary: key is a wildcard, and value is a set of phonemes
 exceptions = [] #forbidden phonemic sequences
 soundChanges = []
+phonemeRanks = {}
+wordPattern = "" #word pattern like (C)V(n)(CV)(n), (C)(R)V(R)(n) etc.
 filename = 'example.json'
+yd = YuleDistr()
 
 running = True
 
 def generate_words(sample, phonemes, num=10): 
-    global words
+    global words, yd
     gen = True
     r = random.random()
     word = ""
@@ -24,11 +29,16 @@ def generate_words(sample, phonemes, num=10):
                 gen = (random.randint(0,1) == 0)
             elif sample[j] == ')':
                 gen = True
-            else:
+            elif sample[j].isupper():
                 for n, phtype in enumerate(phonemes.keys()):
                     if gen and phtype == sample[j]:
-                        k = random.choice(phonemes[phtype])
+                        #k = random.choice(phonemes[phtype])
+                        n = yd.randomGen(phonemeRanks[phtype])
+                        k = phonemes[phtype][n]
                         word += k
+            elif gen:
+                word += sample[j]
+                    
         if (not word in words) and (not isExceptional(word)):
             words.append(word)
 
@@ -190,7 +200,7 @@ def setClearSequence(srcSeq, srcLaw, resLaw):
 
 #command line executer
 def command_exec(cmd):
-    global words, phonemes, filename, exceptions, soundChanges
+    global words, phonemes, filename, exceptions, soundChanges, yd, phonemeRanks
     params = cmd.split()
     if params == []:
         print("Phonemes:\n")
@@ -223,6 +233,15 @@ def command_exec(cmd):
         #pars = 0
         if params[1] == "ph" and len(params) == 4:
             phonemes[params[2]] = params[3].split(',')
+            phonemeRanks[params[2]] = []
+            freq = 0
+            i = 0
+            while i < len(phonemes[params[2]]):
+                freq = yd.borodProb(len(phonemes[params[2]]), random.randint(1, len(phonemes[params[2]])))
+                if not freq in phonemeRanks[params[2]]:
+                    phonemeRanks[params[2]].append(freq)
+                    i += 1
+                
         elif params[1] == "ex" and len(params) > 2:
             i = 2
             while i < len(params):
@@ -301,12 +320,13 @@ def command_exec(cmd):
         phonemes = {}
         exceptions = []
         soundChanges = []
+        phonemeRanks = []
 
     elif params[0] == "save":
         if (len(params) == 2):
             filename = params[1]
             with open(filename, 'w') as outfile:
-                json.dump([phonemes, exceptions, soundChanges], outfile)
+                json.dump([phonemes, exceptions, soundChanges, phonemeRanks], outfile)
         else:
             print("! Error, can't save a file")
 
@@ -319,6 +339,7 @@ def command_exec(cmd):
                 phonemes = file[0]
                 exceptions = file[1]
                 soundChanges = file[2]
+                phonemeRanks = file[3]
         else:
             print("! Error, can't load a file")
 
@@ -338,6 +359,7 @@ def command_exec(cmd):
         print("prwords - show wordlist")
         print("exit - close program")
     
+
 
 
 print("This is a word generator for your conlang :3\nType 'help' for additional info\n")
