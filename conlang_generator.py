@@ -203,12 +203,14 @@ def command_exec(cmd):
     global words, phonemes, filename, exceptions, soundChanges, yd, phonemeRanks
     params = cmd.split()
     if params == []:
-        print("Phonemes:\n")
+        print("Phonemes:")
         print(phonemes)
-        print("Forbidden clusters:\n")
+        print("\nForbidden clusters:")
         print(exceptions)
-        print("Phonological rules:\n")
+        print("\nPhonological rules:")
         print(soundChanges)
+        print("\nRanks:")
+        print(phonemeRanks)
 
     elif params[0] == "exit":
         running = False
@@ -264,6 +266,23 @@ def command_exec(cmd):
                     words.append(params[i])
                 else:
                     words.remove(params[i])
+        elif params[1] == "rank" and len(params) == 5:
+            phs = params[3].split(',')
+            phr = params[4].split(',')
+            for i in range(0, len(phr)):
+                if int(phr[i]) < 1:
+                    print("! Error, ranks must be greater or equal to 1")
+                    phr = {}
+                    phs = {}
+                    break
+                else:
+                    phr[i] = yd.borodProb(len(phr), int(phr[i]))
+            if len(phs) == len(phr):
+                phonemes[params[2]] = phs
+                phonemeRanks[params[2]] = phr
+            else:
+                print("! Error, number of phonemes must be equal to number of ranks")
+            
         else:
             print("! Error, can't execute a command")
 
@@ -344,11 +363,12 @@ def command_exec(cmd):
             print("! Error, can't load a file")
 
     elif params[0] == "help":
-        print("set ph <typeOfPhoneme> <phonemes> - set class of phonemes typed with a single string;")
+        print("set ph <typeOfPhoneme> <phonemes> - set class of phonemes typed with a single string (ranks are randomly generted);")
         print("set ex <exception1> [exception2] [exception3] ... [exceptionN] - add/remove forbidden phonemic sequences;")
         print("set rule <soundChange> - add/remove a phonological rule")
         print("(with notation A>B/X_Y, where A - is a source sound(s), B - is a result sound(s), X - a preceding environment, Y - a following environment)")
         print("set words <word1> [word2] ... [wordN] - add/remove word(s)")
+        print("set rank <typeOfPhoneme> <phonemes> <ranks> - set phonemic inventory with certain ranks")
         print("reset - reset phonemic invertory;")
         print("load <filename> - load phonemic inventory, exceptions and sound changes from afile;")
         print("save <filename> - save phonemic inventory, exceptions and sound changes to a file;")
