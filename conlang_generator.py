@@ -14,6 +14,7 @@ phonemeRanks = {}
 wordPattern = "" #word pattern like (C)V(n)(CV)(n), (C)(R)V(R)(n) etc.
 filename = 'example.json'
 yd = YuleDistr()
+semes = [] #list of meanings (words from another language)
 
 running = True
 
@@ -198,9 +199,34 @@ def setClearSequence(srcSeq, srcLaw, resLaw):
                  res = res.replace(res[k], srcSeq[i])
     return res
 
+#to set meanings from language B to words from language A
+def setMeanings(maxHomonyms, dictFile):
+    global words, semes, yd
+    sw = open(dictFile+".txt", 'wt', encoding='utf-8')
+    freqsHoms = []
+    for i in range(0, maxHomonyms):
+        freqsHoms.append(yd.borodProb(maxHomonyms, i+1))
+    #print(freqsHoms)
+    for i in range(0, len(words)):
+        hs = yd.randomGen(freqsHoms) + 1
+        #print(yd.randomGen(freqsHoms))
+        homs = []
+        sw.write(words[i]+" - ")
+        j = 0
+        while j < hs:
+            k = random.randint(0, len(semes)-1)
+            if not semes[k] in homs:
+                homs.append(semes[k])
+                if j < hs - 1:
+                    sw.write(semes[k]+", ")
+                else:
+                    sw.write(semes[k])
+                j += 1
+        sw.write('\n')
+
 #command line executer
 def command_exec(cmd):
-    global words, phonemes, filename, exceptions, soundChanges, yd, phonemeRanks
+    global words, phonemes, filename, exceptions, soundChanges, yd, phonemeRanks, semes
     params = cmd.split()
     if params == []:
         print("Phonemes:")
@@ -335,6 +361,13 @@ def command_exec(cmd):
             else:
                     words.remove(params[i])
 
+    elif params[0] == "setmeaning":
+        if len(params) == 4:
+            sr = open(params[1]+".txt", "rt", encoding="utf-8")
+            inp = sr.read()
+            semes = inp.split()
+            setMeanings(int(params[3]), params[2])
+        
     elif params[0] == "reset":
         phonemes = {}
         exceptions = []
