@@ -372,7 +372,7 @@ def command_exec(cmd):
         phonemes = {}
         exceptions = []
         soundChanges = []
-        phonemeRanks = []
+        phonemeRanks = {}
 
     elif params[0] == "save":
         if (len(params) == 2):
@@ -410,6 +410,7 @@ def command_exec(cmd):
         print("savewords <filename> - save wordlist to file;")
         print("loadwords <filename> - load wordlist from a file")
         print("prwords - show wordlist")
+        print("setmeaning <fileOfWordsFromLangB> <resultingFile> <maxHomonyms> - set meaning to words of language A (generated or loaded words) by words from language B")
         print("exit - close program")
     
 
