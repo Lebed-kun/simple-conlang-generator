@@ -21,16 +21,23 @@ running = True
 def generate_words(sample, phonemes, num=10): 
     global words, yd
     gen = True
+    parens = 0
     r = random.random()
     word = ""
     i = 0
     while i < int(num):
         for j in range(0, len(sample)):
             if sample[j] == '(':
-                gen = (random.randint(0,1) == 0)
+                if gen:
+                    gen = (random.randint(0,1) == 0)
+                if not gen:
+                    parens += 1
             elif sample[j] == ')':
-                gen = True
-            elif sample[j].isupper():
+                if not gen:
+                    parens -= 1
+                if parens == 0:
+                    gen = True
+            elif sample[j] in phonemes.keys():
                 for n, phtype in enumerate(phonemes.keys()):
                     if gen and phtype == sample[j]:
                         #k = random.choice(phonemes[phtype])
@@ -142,14 +149,17 @@ def matchSequences(seq1, seq2):
     if not len(seq1) == len(seq2):
         return False
     for i in range(0, len(seq1)):
-        if 65 <= ord(seq1[i]) <= 90:
-            if (65 <= ord(seq2[i]) <= 90) and (seq1[i] == seq2[i]):
+        #if 65 <= ord(seq1[i]) <= 90:
+        if seq1[i] in phonemes.keys():
+            #if (65 <= ord(seq2[i]) <= 90) and (seq1[i] == seq2[i]):
+            if (seq2[i] in phonemes.keys()) and (seq1[i] == seq2[i]):
                 pass
             elif seq2[i] in phonemes.get(seq1[i]):
                 pass
             else:
                 return False
-        elif 65 <= ord(seq2[i]) <= 90:
+        #elif 65 <= ord(seq2[i]) <= 90:
+        elif seq2[i] in phonemes.keys():
             if seq1[i] in phonemes.get(seq2[i]):
                 pass
             else:
@@ -190,10 +200,12 @@ def proceedChange(word, change):
 
 #to set certain characters of wildcards in resulting sequence
 def setClearSequence(srcSeq, srcLaw, resLaw):
+    global phonemes
     k = 0
     res = resLaw
     for i in range(0, len(srcLaw)):
-        if 65 <= ord(srcLaw[i]) <= 90:
+        #if 65 <= ord(srcLaw[i]) <= 90:
+        if srcLaw[i] in phonemes.keys():
              k = res.find(srcLaw[i])
              if k > -1:
                  res = res.replace(res[k], srcSeq[i])
@@ -410,7 +422,7 @@ def command_exec(cmd):
         print("savewords <filename> - save wordlist to file;")
         print("loadwords <filename> - load wordlist from a file")
         print("prwords - show wordlist")
-        print("setmeaning <fileOfWordsFromLangB> <resultingFile> <maxHomonyms> - set meaning to words of language A (generated or loaded words) by words from language B")
+        print("setmeaning - <fileOfWordsFromLangB> <resultingFile> <maxHomonyms>")
         print("exit - close program")
     
 
